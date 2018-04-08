@@ -462,7 +462,7 @@ public class ExampleJooqTests {
 }
 ```
 
-JOOQ测试是事务性的，默认情况下测试结束后会回滚，如果你不希望回滚，可以关闭事务管理，针对某个test或所有test类  [shown in the JDBC example](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jdbc-test "43.3.11 Auto-configured JDBC Tests").
+JOOQ测试是事务性的，默认情况下测试结束后会回滚，如果你不希望回滚，可以关闭事务管理，针对某个test或所有test类  [见JDBC示例](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jdbc-test "43.3.11 Auto-configured JDBC Tests").
 
 `@JooqTest`带来的所有自动配置项请参考 [附录](https://docs.spring.io/spring-boot/docs/current/reference/html/test-auto-configuration.html "Appendix D. Test auto-configuration annotations").
 
@@ -537,10 +537,10 @@ public class ExampleDataRedisTests {
 
 本章不翻译，请参考[英文文档](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-ldap-test)
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-rest-client)43.3.17 Auto-configured REST Clients
+#### 3.17 自动配置Rest Client
 
-You can use the  `@RestClientTest`  annotation to test REST clients. By default, it auto-configures Jackson, GSON, and Jsonb support, configures a  `RestTemplateBuilder`, and adds support for  `MockRestServiceServer`. The specific beans that you want to test should be specified by using the  `value`  or  `components`  attribute of  `@RestClientTest`, as shown in the following example:
-
+可以使用`@RestClientTest`注解测试rest客户端，该注解默认会自动配置Jackson，gson和Jsonb的支持，同时配置`RestTemplateBuilder`，支持`MockRestServiceServer`。你想测试的具体Bean需要使用`@RestClientTest`的value或`components`属性指定，如下例所示：
+```
 _@RunWith(SpringRunner.class)_
 _@RestClientTest(RemoteVehicleDetailsService.class)_
 public class ExampleRestClientTest {
@@ -561,19 +561,20 @@ public class ExampleRestClientTest {
 	}
 
 }
+```
 
-A list of the auto-configuration settings that are enabled by  `@RestClientTest`  can be  [found in the appendix](https://docs.spring.io/spring-boot/docs/current/reference/html/test-auto-configuration.html "Appendix D. Test auto-configuration annotations").
+`@RestClientTest`带来的所有自动配置项列表请参考 [附录](https://docs.spring.io/spring-boot/docs/current/reference/html/test-auto-configuration.html "Appendix D. Test auto-configuration annotations").
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-rest-docs)43.3.18 Auto-configured Spring REST Docs Tests
+#### 3.18 自动配置Spring Rest Docs Tests
 
-You can use the  `@AutoConfigureRestDocs`  annotation to use  [Spring REST Docs](https://projects.spring.io/spring-restdocs/)  in your tests with Mock MVC or REST Assured. It removes the need for the JUnit rule in Spring REST Docs.
+当你的测试使用[Spring REST Docs](https://projects.spring.io/spring-restdocs/) 和Mock MVC或Rest Assured，可以使用`@AutoConfigureRestDocs`注解，在Spring REST Docs中你不需要JUnit Rule。
 
-`@AutoConfigureRestDocs`  can be used to override the default output directory (`target/generated-snippets`  if you are using Maven or  `build/generated-snippets`  if you are using Gradle). It can also be used to configure the host, scheme, and port that appears in any documented URIs.
+`@AutoConfigureRestDocs`注解可用来覆盖默认的输出目录(Maven `target/generated-snippets`或Gradle `build/generated-snippets`)，该注解还可以被用于修改所有文档中会出现的host、scheme和port等信息。
 
-#### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-rest-docs-mock-mvc)Auto-configured Spring REST Docs Tests with Mock MVC
+**结合Mock MVC的自动配置Spring Rest Docs测试**
 
-`@AutoConfigureRestDocs`  customizes the  `MockMvc`  bean to use Spring REST Docs. You can inject it by using  `@Autowired`  and use it in your tests as you normally would when using Mock MVC and Spring REST Docs, as shown in the following example:
-
+为了使用Spring REST Docs，`@AutoConfigureRestDocs`定制了`MockMvc` bean。你可以注入这个bean并在测试中使用它，如下例所示：
+```
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -603,9 +604,10 @@ public class UserDocumentationTests {
 	}
 
 }
+```
 
-If you require more control over Spring REST Docs configuration than offered by the attributes of  `@AutoConfigureRestDocs`, you can use a`RestDocsMockMvcConfigurationCustomizer`  bean, as shown in the following example:
-
+如果需要对Spring REST Docs的配置进行更精细的控制，除了`@AutoConfigureRestDocs`提供的属性控制以外，可以使RestDocsMockMvcConfigurationCustomizer` config bean，如下例所示：
+```
 _@TestConfiguration_
 static class CustomizationConfiguration
 		implements RestDocsMockMvcConfigurationCustomizer {
@@ -616,9 +618,10 @@ static class CustomizationConfiguration
 	}
 
 }
+```
 
-If you want to make use of Spring REST Docs support for a parameterized output directory, you can create a  `RestDocumentationResultHandler`  bean. The auto-configuration calls  `alwaysDo`  with this result handler, thereby causing each  `MockMvc`  call to automatically generate the default snippets. The following example shows a  `RestDocumentationResultHandler`  being defined:
-
+如果想使用Spring REST Docs支持参数化输出，你可以创建一个`RestDocumentationResultHandler` bean。这种自动配置被称作`alwaysDo`，从而使得每个`MockMvc`调用自动生成默认片段，下面的例子展示了`RestDocumentationResultHandler` bean的定义方式：
+```
 _@TestConfiguration_
 static class ResultHandlerConfiguration {
 
@@ -628,11 +631,12 @@ static class ResultHandlerConfiguration {
 	}
 
 }
+```
 
-#### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-rest-docs-rest-assured)Auto-configured Spring REST Docs Tests with REST Assured
+#### [Auto-configured Spring REST Docs Tests with REST Assured](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-rest-docs-rest-assured)
 
 `@AutoConfigureRestDocs`  makes a  `RequestSpecification`  bean, preconfigured to use Spring REST Docs, available to your tests. You can inject it by using  `@Autowired`  and use it in your tests as you normally would when using REST Assured and Spring REST Docs, as shown in the following example:
-
+```
 import io.restassured.specification.RequestSpecification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -666,9 +670,9 @@ public class UserDocumentationTests {
 	}
 
 }
-
+```
 If you require more control over Spring REST Docs configuration than offered by the attributes of  `@AutoConfigureRestDocs`, a  `RestDocsRestAssuredConfigurationCustomizer`  bean can be used, as shown in the following example:
-
+```
 _@TestConfiguration_
 public static class CustomizationConfiguration
 		implements RestDocsRestAssuredConfigurationCustomizer {
@@ -679,70 +683,72 @@ public static class CustomizationConfiguration
 	}
 
 }
+```
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-user-configuration)43.3.19 User Configuration and Slicing
+#### 3.19 [用户配置和切片](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-user-configuration)
 
-If you  [structure your code](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html "14. Structuring Your Code")  in a sensible way, your  `@SpringBootApplication`  class is  [used by default](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-detecting-config "43.3.2 Detecting Test Configuration")  as the configuration of your tests.
+如果你使用合理的方式[组织代码](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html "14. Structuring Your Code")，`@SpringBootApplication` 类[默认被用作测试的配置](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-detecting-config "43.3.2 Detecting Test Configuration")
 
-It then becomes important not to litter the application’s main class with configuration settings that are specific to a particular area of its functionality.
+不要将应用的main类和某个特定区域功能的配置放在一起，这很重要。
 
-Assume that you are using Spring Batch and you rely on the auto-configuration for it. You could define your  `@SpringBootApplication`  as follows:
-
+假设你使用Spring Batch且依赖它的自动配置，你以如下方式定义 `@SpringBootApplication` 
+```
 _@SpringBootApplication_
 _@EnableBatchProcessing_
 public class SampleApplication { ... }
+```
 
-Because this class is the source configuration for the test, any slice test actually tries to start Spring Batch, which is definitely not what you want to do. A recommended approach is to move that area-specific configuration to a separate  `@Configuration`  class at the same level as your application, as shown in the following example:
-
+由于这个类是测试的源配置，任何切片测试都会尝试启动Spring Batch，但这不是你想要的，一个推荐的方式是将区域特定的配置移到一个单独的`@Configuration`类中，例如：
+```
 _@Configuration_
 _@EnableBatchProcessing_
 public class BatchConfiguration { ... }
+```
 
-![[Note]](https://docs.spring.io/spring-boot/docs/current/reference/html/images/note.png)
+> 根据应用的复杂度，你可能需要一个单独的定制化`@Configuration` 类或在每个特定领域区域定义一个`@Configuration` 类，后一种方式让你可以在需要的时候在某个测试中开启该特殊配置，必要的时候使用`@Import` 注解导入。
 
-Depending on the complexity of your application, you may either have a single  `@Configuration`  class for your customizations or one class per domain area. The latter approach lets you enable it in one of your tests, if necessary, with the  `@Import`  annotation.
-
-Another source of confusion is classpath scanning. Assume that, while you structured your code in a sensible way, you need to scan an additional package. Your application may resemble the following code:
-
+另一个配置源困惑是类路径扫描，假设你采用合理的方式组织代码，你需要扫描一个额外的包，你的应用或许类似如下代码：
+```
 _@SpringBootApplication_
 _@ComponentScan({ "com.example.app", "org.acme.another" })_
 public class SampleApplication { ... }
+```
 
-Doing so effectively overrides the default component scan directive with the side effect of scanning those two packages regardless of the slice that you chose. For instance, a  `@DataJpaTest`  seems to suddenly scan components and user configurations of your application. Again, moving the custom directive to a separate class is a good way to fix this issue.
+以上配置会覆盖默认的component scan方式，由扫描你应用的包和子包变为扫描指定的两个包及起子包，比如，一个@DataJpaTest`突然扫描应用的components和用户的配置，将这个定制注解移动到一个单独Configuration类是解决该问题的好方法。
 
-![[Tip]](https://docs.spring.io/spring-boot/docs/current/reference/html/images/tip.png)
+> 如果你不选择以上的方法，你可以在测试类相关的某一层级下创建`@SpringBootConfiguration`，使用该配置代替主应用配置，另一种方式是指定一个测试的源配置，该配置关闭寻找默认源的行为。
 
-If this is not an option for you, you can create a  `@SpringBootConfiguration`  somewhere in the hierarchy of your test so that it is used instead. Alternatively, you can specify a source for your test, which disables the behavior of finding a default one.
-
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-with-spock)43.3.20 Using Spock to Test Spring Boot Applications
+#### 3.20 [使用Spock测试Spring Boot应用](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-with-spock)
 
 If you wish to use Spock to test a Spring Boot application, you should add a dependency on Spock’s  `spock-spring`  module to your application’s build.  `spock-spring`  integrates Spring’s test framework into Spock. It is recommended that you use Spock 1.1 or later to benefit from a number of improvements to Spock’s Spring Framework and Spring Boot integration. See  [the documentation for Spock’s Spring module](http://spockframework.org/spock/docs/1.1/modules.html)  for further details.
 
-## [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-test-utilities)43.4 Test Utilities
 
-A few test utility classes that are generally useful when testing your application are packaged as part of  `spring-boot`.
+### 4 [测试工具类集](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-test-utilities)
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-configfileapplicationcontextinitializer-test-utility)43.4.1 ConfigFileApplicationContextInitializer
+一些测试工具类在测试你的应用的时候通常是有用的，这些类是`spring-boot`package的一部分。
 
-`ConfigFileApplicationContextInitializer`  is an  `ApplicationContextInitializer`  that you can apply to your tests to load Spring Boot  `application.properties`  files. You can use it when you do not need the full set of features provided by  `@SpringBootTest`, as shown in the following example:
 
+#### 4.1 [ConfigFileApplicationContextInitializer](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-configfileapplicationcontextinitializer-test-utility)
+
+`ConfigFileApplicationContextInitializer`是一个`ApplicationContextInitializer`，使测试加载Spring Boot `application.properties`文件，如果你不想要`@SpringBootTest`特供的所有特性，可以用该注解，例如：
+```
 @ContextConfiguration(classes = Config.class,
 	initializers = ConfigFileApplicationContextInitializer.class)
+```
 
-![[Note]](https://docs.spring.io/spring-boot/docs/current/reference/html/images/note.png)
+> 单独使用`ConfigFileApplicationContextInitializer`不提供`@Value("${…​}")`的注入支持，它只保证`application.properties`文件加载到Spring’s  `Environment`，如需`@Value`支持，你需要额外配置一个`PropertySourcesPlaceholderConfigurer`，或使用`@SpringBootTest`，会自动配置一个`PropertySourcesPlaceholderConfigurer`。
 
-Using  `ConfigFileApplicationContextInitializer`  alone does not provide support for  `@Value("${…​}")`  injection. Its only job is to ensure that  `application.properties`  files are loaded into Spring’s  `Environment`. For  `@Value`  support, you need to either additionally configure a  `PropertySourcesPlaceholderConfigurer`  or use  `@SpringBootTest`, which auto-configures one for you.
+#### 4.2 [EnvironmentTestUtils](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-environment-test-utilities)
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-environment-test-utilities)43.4.2 EnvironmentTestUtils
-
-`EnvironmentTestUtils`  lets you quickly add properties to a  `ConfigurableEnvironment`  or  `ConfigurableApplicationContext`. You can call it with`key=value`  strings, as follows:
-
+`EnvironmentTestUtils`可以让你快速添加属性到`ConfigurableEnvironment`或`ConfigurableApplicationContext`中，可以通过`key=value`字符串调用，例如：
+```
 EnvironmentTestUtils.addEnvironment(env, "org=Spring", "name=Boot");
+```
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-output-capture-test-utility)43.4.3 OutputCapture
+#### 4.3[OutputCapture](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-output-capture-test-utility)
 
-`OutputCapture`  is a JUnit  `Rule`  that you can use to capture  `System.out`  and  `System.err`  output. You can declare the capture as a  `@Rule`  and then use  `toString()`  for assertions, as follows:
-
+`OutputCapture`是一个JUnit  `Rule`，可以用来捕获 `System.out`或 `System.err`的输出，将其声明为`@Rule`，然后使用`toString()`做断言，如下：
+```
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.boot.test.rule.OutputCapture;
@@ -762,20 +768,19 @@ public class MyTest {
 	}
 
 }
+```
 
-### [](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-rest-templates-test-utility)43.4.4 TestRestTemplate
+#### 4.4 [TestRestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-rest-templates-test-utility)
 
-![[Tip]](https://docs.spring.io/spring-boot/docs/current/reference/html/images/tip.png)
+> Spring Framework 5.0提供了一个新的`WebTestClient`，用于 [WebFlux集成测试](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-webflux-tests "43.3.9 Auto-configured Spring WebFlux Tests")和[WebFlux和MVC端对端测试](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-running-server "43.3.4 Testing with a running server"). 相比`TestRestTemplate`，`WebTestClient`为断言提供了流式api。
 
-Spring Framework 5.0 provides a new  `WebTestClient`  that works for  [WebFlux integration tests](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-webflux-tests "43.3.9 Auto-configured Spring WebFlux Tests")  and both  [WebFlux and MVC end-to-end testing](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-running-server "43.3.4 Testing with a running server"). It provides a fluent API for assertions, unlike  `TestRestTemplate`.
+`TestRestTemplate`是Spring’s  `RestTemplate`的一个更方便的替代品，经常被用于集成测试。通过它可以获取一个普通的template或一个发送Basic认证的template（带着用户名和密码），任何一种情况下，这个template都是测试友好的，不会抛出服务端的异常或错误，推荐使用Apache HTTP Client (version 4.3.2 or better)，但不是强制的，如果你的类路径上有它，`TestRestTemplate`会自动配置一个合适的client，如果你使用 Apache’s HTTP client，有一些额外的测试友好的特性：
 
-`TestRestTemplate`  is a convenience alternative to Spring’s  `RestTemplate`  that is useful in integration tests. You can get a vanilla template or one that sends Basic HTTP authentication (with a username and password). In either case, the template behaves in a test-friendly way by not throwing exceptions on server-side errors. It is recommended, but not mandatory, to use the Apache HTTP Client (version 4.3.2 or better). If you have that on your classpath, the  `TestRestTemplate`  responds by configuring the client appropriately. If you do use Apache’s HTTP client, some additional test-friendly features are enabled:
+-   不允许重定向(因此你能对重定向结果断言).
+-   Cookies会被忽略(因此template是无状态的).
 
--   Redirects are not followed (so you can assert the response location).
--   Cookies are ignored (so the template is stateless).
-
-`TestRestTemplate`  can be instantiated directly in your integration tests, as shown in the following example:
-
+`TestRestTemplate`可以在你的集成测试中直接初始化，如下所示：
+```
 public class MyTest {
 
 	private TestRestTemplate template = new TestRestTemplate();
@@ -788,9 +793,11 @@ public class MyTest {
 	}
 
 }
+```
 
-Alternatively, if you use the  `@SpringBootTest`  annotation with  `WebEnvironment.RANDOM_PORT`  or  `WebEnvironment.DEFINED_PORT`, you can inject a fully configured  `TestRestTemplate`  and start using it. If necessary, additional customizations can be applied through the  `RestTemplateBuilder`  bean. Any URLs that do not specify a host and port automatically connect to the embedded server, as shown in the following example:
+如果你使用`@SpringBootTest`注解，且设置`WebEnvironment.RANDOM_PORT`  or  `WebEnvironment.DEFINED_PORT`，你可以注入一个配置完整的`TestRestTemplate`供使用，必要的时候，可以通过`RestTemplateBuilder`这个bean来进行额外的定制化。任何不指定host和port的URL都将连接内嵌server，示例如下：
 
+```
 _@RunWith(SpringRunner.class)_
 _@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)_
 public class SampleWebClientTests {
@@ -816,17 +823,17 @@ public class SampleWebClientTests {
 	}
 
 }
-
+```
 ----------
 
-[Prev](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-jmx.html)
+[SpringBoot前一章节](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-jmx.html)
 
-[Up](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features.html)
+[SpringBoot上一层级章节](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features.html)
 
-[Next](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-websockets.html)
+[SpringBoot下一章节](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-websockets.html)
 
 42\. Monitoring and Management over JMX
 
-[Home](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
+[SpringBoot Reference Doc](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
 
 44\. WebSockets
