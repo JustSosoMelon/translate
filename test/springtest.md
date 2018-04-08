@@ -1,4 +1,4 @@
-## 测试
+## SpringBoot 测试
 
 spring boot 提供很多工具类和注解帮助你测试你的应用。测试的支持模块有：包含核心类的spring-boot-test和支持测试自动配置的spring-boot-test-autoconfig。
 大多数开发者使用spring-boot-starter-test开始器，他同时保护了spring boot test的模块和Junit，AssertJ，Hamcrest和一系列其他酷。
