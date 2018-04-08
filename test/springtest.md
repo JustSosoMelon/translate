@@ -56,7 +56,6 @@ public class MyWebFluxTests { ... }
 
 测试springboot应用时，不需要以上的编程方式，SpringBoot的`@*Test`系列注解会在你未显示指定的情况下自动搜索你的主要配置。
 
-The search algorithm works up from the package that contains the test until it finds a class annotated with  `@SpringBootApplication`  or  `@SpringBootConfiguration`. As long as you  [structured your code](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html "14. Structuring Your Code")  in a sensible way, your main configuration is usually found.
 搜索的算法是从当前package开始，逐步搜索直到找到一个被 `@SpringBootApplication`  or  `@SpringBootConfiguration`注解标注的类。只要你的使用 [合理的代码组织结构](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-structuring-your-code.html "14. Structuring Your Code")，通常配置都会被找到。
 
 > 如果你使用 [测试注解去测试应用更具体的维度](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-tests "43.3.6 Auto-configured Tests"), 你应该避免在[main方法的应用类](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-user-configuration "43.3.19 User Configuration and Slicing")上添加具体到某个区域的配置 。
@@ -94,7 +93,6 @@ public class MyTests {
 
 如果你需要启动一个完整的服务器，我们推荐你使用随机端口。如果你使用`@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)`，你每个test运行时都会分配一个随机端口。
 
-The  `@LocalServerPort`  annotation can be used to  [inject the actual port used](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-web-servers.html#howto-discover-the-http-port-at-runtime "75.6 Discover the HTTP Port at Runtime")  into your test. For convenience, tests that need to make REST calls to the started server can additionally  `@Autowire`  a  [`WebTestClient`](https://docs.spring.io/spring/docs/5.0.4.RELEASE/spring-framework-reference/testing.html#webtestclient-tests), which resolves relative links to the running server and comes with a dedicated API for verifying responses, as shown in the following example:
 `@LocalServerPort`注解可以被用于[注入实际使用的端口](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-web-servers.html#howto-discover-the-http-port-at-runtime "75.6 Discover the HTTP Port at Runtime") 到你的测试中。为方便，需要rest调用的测试可以`@Autowire`一个[`WebTestClient`](https://docs.spring.io/spring/docs/5.0.4.RELEASE/spring-framework-reference/testing.html#webtestclient-tests)，这个bean可以使用相对路径访问当前运行的服务，并且有专用严重response的api，如下面例子所示：
 ```
 import org.junit.Test;
@@ -160,7 +158,7 @@ Spring Boot有一个`@MockBean`注解，可用于为`ApplicationContext`定义�
 ```
 @TestExecutionListeners(MockitoTestExecutionListener.class)
 ```
-The following example replaces an existing  `RemoteService`  bean with a mock implementation:
+
 下面的例子是使用mock替换一个已经存在的`RemoteService`  bean
 ```
 import org.junit.*;
@@ -215,7 +213,6 @@ Spring Boot的自动配置系统非常方便，但有时候对测试来说是部
 
 如果你需要配置自动配置的元素，可以使用`@AutoConfigureJsonTesters` 注解。
 
-Spring Boot includes AssertJ-based helpers that work with the JSONassert and JsonPath libraries to check that JSON appears as expected. The  `JacksonTester`,  `GsonTester`,  `JsonbTester`, and  `BasicJsonTester`  classes can be used for Jackson, Gson, Jsonb, and Strings respectively. Any helper fields on the test class can be  `@Autowired`  when using  `@JsonTest`. The following example shows a test class for Jackson:
 Spring Boot包含了基于AssertJ的帮助类，结合JsonAssert和JsonPath库去检测Json是否如预期。`JacksonTester`,  `GsonTester`,  `JsonbTester`和  `BasicJsonTester`类分别针对Jackson, Gson, Jsonb和Strings。当使用`@JsonTest`注解后，以上任何一个类的实例都可以通过`@Autowired`注入测试类属性中。下面是一个针对Jackson的例子：
 ```
 import org.junit.*;
