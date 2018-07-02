@@ -54,7 +54,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 ### 其他参数
 | 参数 | 描述 |
 |--|--|
-| AllowMultithreading | true表示允许tiles的多线程加载 |
+| AllowMultithreading | tr.ue表示允许tiles的(多线程)（加载） |
 | USE_JAI_IMAGEREAD | 控制底层读取granules的机制，true表示geoserver会使用JAI图片读取操作和延迟加载机制，false表示使用Java ImageIO读取图片，即时加载 |
 | SUGGESTED_TILE_SIZE | 控制输入granules和输出mosaic的tile size，由逗号分隔的两个正整数组成，如512，512 |
 
