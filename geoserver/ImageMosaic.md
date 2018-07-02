@@ -19,6 +19,7 @@ JAI文档给出了一个Mosaic的描述：
 
 ### 配置文件
 mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为mosaic创建的一部分，通常不需要人工编辑，下面的表格描述了配置文件中的多个元素：
+
 | 参数 |是否强制  | 描述 |
 |--|--|--|--|
 | Evelope2D | Y | Contains the envelope for this mosaic formatted as LLCx,LLXy URCx,URCy (notice the space between the coordinates of the Lower Left Corner and the coordinates of the Upper Right Corner). An example is _Envelope2D=432500.25,81999.75 439250.25,84999.75_ |  |
@@ -28,6 +29,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 | ExpandToRGB | N | Applies to colormapped granules. Asks the internal mosaic engine to expand the colormapped granules to RGB prior to mosaicking them. This is needed whenever the the granules do not share the same color map hence a straight composition that would retain such a color map cannot be performed. |  |
 | AbsolutePath | Y |  It controls whether or not the path stored inside the “location” attribute represents an absolute path or a path relative to the location of the shapefile index. Notice that a relative index ensure much more portability of the mosaic itself. Default value for this parameter is False, which means relative paths. |  |
 | LocationAttribute | N | The name of the attribute path in the shapefile index. Default value is  location |  |
+
 
 ### 创建Granules索引和配置文件
 重构版本后的ImageMosaic插件可以在线生成shapefile索引和mosaic配置文件，不需要依赖gdal或其他类似的工具。
