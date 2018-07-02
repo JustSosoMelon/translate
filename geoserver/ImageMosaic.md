@@ -44,7 +44,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 |--|--|
 | MaxAllowedTiles | 一个请求同时允许加载的最大tile数目，对于大的mosaic，这个参数应该被恰当的设置，防止服务器同时加载太多granules，从而耗尽资源 |
 | BackgroundValues | 设置mosaic的背景，基于mosaic的特性，为no data区域设置一个值是明智的，通常-9999，这个值在所有mosaic band上生效 |
-| Filter | 设置默认的mosaic过滤器，应该是一个有效的ECQL查询，如果没有设置cql_filter,该查询（valid query，类似select 1）将会被用于默认（而不是Filter.INCLUDE）,如果cql_filter在请求中指定了，则会覆盖默认值 |
+| Filter | 设置默认的mosaic过滤器，应该是一个有效的ECQL查询，如果没有设置cql_filter,该查询 valid query，类似select 1，将会被用于默认，而不是Filter.INCLUDE,如果cql_filter在请求中指定了，则会覆盖默认值 |
 
 > 注意：不要使用filter去改变时间或者海拔维度。他会被添加为And条件，对time来说是与CURRENT做And，对elevation来说是与LOWER做与。
 > **OutputTransparentColor**
