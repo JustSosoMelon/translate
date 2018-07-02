@@ -40,6 +40,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 
 ### 调整ImageMosaic图层配置
 图层编辑页面提供了一组控制参数，用于进一步调整或控制mosaic创建的过程，参数如下：
+
 | 参数 | 描述 |
 |--|--|
 | MaxAllowedTiles | 一个请求同时允许加载的最大tile数目，对于大的mosaic，这个参数应该被恰当的设置，防止服务器同时加载太多granules，从而耗尽资源 |
@@ -54,7 +55,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 ### 其他参数
 | 参数 | 描述 |
 |--|--|
-| AllowMultithreading | tr.ue表示允许tiles的(多线程)（加载） |
+| AllowMultithreading | true表示允许tiles的多线程加载 |
 | USE_JAI_IMAGEREAD | 控制底层读取granules的机制，true表示geoserver会使用JAI图片读取操作和延迟加载机制，false表示使用Java ImageIO读取图片，即时加载 |
 | SUGGESTED_TILE_SIZE | 控制输入granules和输出mosaic的tile size，由逗号分隔的两个正整数组成，如512，512 |
 
