@@ -19,7 +19,7 @@ JAI文档给出了一个Mosaic的描述：
 
 ### 配置文件
 mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为mosaic创建的一部分，通常不需要人工编辑，下面的表格描述了配置文件中的多个元素：
-| 参数 |是否强制  | 描述 |  |
+| 参数 |是否强制  | 描述 |
 |--|--|--|--|
 | Evelope2D | Y | Contains the envelope for this mosaic formatted as LLCx,LLXy URCx,URCy (notice the space between the coordinates of the Lower Left Corner and the coordinates of the Upper Right Corner). An example is _Envelope2D=432500.25,81999.75 439250.25,84999.75_ |  |
 | LevelsNum | Y | Represents the number of reduced resolution layers that we currently have for the granules of this mosaic. |  |
@@ -42,7 +42,7 @@ mosaic配置文件用于存储配置参数，控制ImageMosaic产检，它作为
 图层编辑页面提供了一组控制参数，用于进一步调整或控制mosaic创建的过程，参数如下：
 | 参数 | 描述 |
 |--|--|
-| MaxAllowedTiles | 一个请求同时允许加载的最大tile数目，对于大的mosaic，这个参数应该被恰当的设置，防止服务器同时加载太多granules，从而耗尽资源|
+| MaxAllowedTiles | 一个请求同时允许加载的最大tile数目，对于大的mosaic，这个参数应该被恰当的设置，防止服务器同时加载太多granules，从而耗尽资源 |
 | BackgroundValues | 设置mosaic的背景，基于mosaic的特性，为no data区域设置一个值是明智的（通常-9999），这个值在所有mosaic band上生效 |
 | Filter | 设置默认的mosaic过滤器，应该是一个有效的ECQL查询，如果没有设置cql_filter,该查询（valid query，类似select 1）将会被用于默认（而不是Filter.INCLUDE）,如果cql_filter在请求中指定了，则会覆盖默认值 |
 
